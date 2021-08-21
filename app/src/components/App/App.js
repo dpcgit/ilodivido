@@ -1,48 +1,63 @@
-//import React, { useState } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Link,BrowserRouter, Route,Switch } from 'react-router-dom';
 import Dashboard from '../Dashboard/Dashboard';
 import Login from '../Login/Login';
 import Preferences from '../Preferences/Preferences';
-import useToken from './useToken';
-
-/*function setToken(userToken) {
-  sessionStorage.setItem('token', JSON.stringify(userToken));
-};
-
-function getToken() {
-  const tokenString = sessionStorage.getItem('token');
-  const userToken = JSON.parse(tokenString);
-  return userToken?.token
-};
-*/
-
-
-
+import Register from '../Register/Register';
 
 
 function App() {
-  
-  const { token, setToken } = useToken();
-  //const token = getToken();
-  //const [token, setToken] = useState();
-  
-  if(!token) {
-    return <Login setToken={setToken} />
+
+  //state that handle//helps with conditional rendering
+  const [loggedIn,setLoggedin] = useState(false);
+
+  if(loggedIn===false){
+    return (
+      <div>
+        <h1>Ilodivido</h1>
+        <BrowserRouter>
+        <nav>
+          <ul>
+            <li><Link to="/register">Register</Link></li>
+            <li><Link to="/login">Login</Link></li>
+          </ul>
+        </nav>
+        <Switch>
+          <Route path="/login">
+            <Login/>
+          </Route>
+          <Route path='/register'>
+            <Register/>
+          </Route>
+        </Switch>
+        </BrowserRouter>
+      </div>
+    );
   }
-  
-  
+
   return (
     <div className="wrapper">
-      <h1>Application</h1>
+      <h1>Ilodivido</h1>
       <BrowserRouter>
+      <nav>
+          <ul>
+            <li><Link to="/preferences">Prefrences</Link></li>
+          </ul>
+        </nav>
+        
         <Switch>
           <Route path="/dashboard">
             <Dashboard />
           </Route>
           <Route path="/preferences">
             <Preferences />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path='/register'>
+            <Register/>
           </Route>
         </Switch>
       </BrowserRouter>
