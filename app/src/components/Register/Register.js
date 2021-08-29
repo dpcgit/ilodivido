@@ -1,10 +1,9 @@
+import { gql, useMutation} from '@apollo/client';
 import React, {useState} from 'react';
-
 //import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 // https://www.apollographql.com/docs/react/data/mutations/
 //https://www.apollographql.com/docs/react/get-started/
 //https://medium.com/nerd-for-tech/how-to-build-forms-with-multiple-input-fields-using-react-hooks-677da2b851aa
-import { ApolloClient, gql, useMutation, InMemoryCache, ApolloProvider} from '@apollo/client';
 
 // Define mutation
 const ADD_USER = gql`
@@ -25,10 +24,10 @@ const ADD_USER = gql`
   
 `;
 
-export default function Register() {
+export default function Register({setRegistered}) {
 
   const [user,setUser] = useState({username:"",email:"",password:""});
-
+  
   const [addUser, { data, loading, error }] = useMutation(ADD_USER);
 
   if (loading) return 'Submitting...';
@@ -37,7 +36,8 @@ export default function Register() {
   function handleSubmit(event){
     event.preventDefault();
     addUser({variables:{username:user.username,email:user.email,password:user.password}});
-};
+    setRegistered(true);
+  };
 
   function handleChange(event){
     setUser({...user,[event.target.name]:event.target.value});

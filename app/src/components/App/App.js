@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import { Link,BrowserRouter, Route,Switch } from 'react-router-dom';
+import { Link, BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Dashboard from '../Dashboard/Dashboard';
 import Login from '../Login/Login';
 import Preferences from '../Preferences/Preferences';
@@ -9,11 +9,19 @@ import Register from '../Register/Register';
 
 function App() {
 
-  //state that handle//helps with conditional rendering
+  //states that handle/help with conditional rendering/redirection
   const [loggedIn,setLoggedin] = useState(false);
+  const [registered,setRegistered] = useState(false);
+  
+  // effect that sets registered to false right after it's changed to true by the 
+  // submit handler in the register component, as without it we cannot visit register again
+  // after registered is set to true: {registered ? <Redirect to="/login" />:<Register setRegistered={setRegistered}/>}
 
-  if(loggedIn===false){
-    return (
+  useEffect(()=>{
+    setRegistered(false);
+  });
+   
+  return (
       <div>
         <h1>Ilodivido</h1>
         <BrowserRouter>
@@ -28,41 +36,14 @@ function App() {
             <Login/>
           </Route>
           <Route path='/register'>
-            <Register/>
+            {registered ? <Redirect to="/login" />:<Register setRegistered={setRegistered}/>}
           </Route>
         </Switch>
         </BrowserRouter>
       </div>
     );
-  }
 
-  return (
-    <div className="wrapper">
-      <h1>Ilodivido</h1>
-      <BrowserRouter>
-      <nav>
-          <ul>
-            <li><Link to="/preferences">Prefrences</Link></li>
-          </ul>
-        </nav>
-        
-        <Switch>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-          <Route path="/preferences">
-            <Preferences />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path='/register'>
-            <Register/>
-          </Route>
-        </Switch>
-      </BrowserRouter>
-    </div>
-  );
 }
+
 
 export default App;
