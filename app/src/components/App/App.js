@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Link, BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import Dashboard from '../Dashboard/Dashboard';
+import PrivateWrapper from '../PrivateWrapper/PrivateWrapper';
 import Login from '../Login/Login';
-import Preferences from '../Preferences/Preferences';
 import Register from '../Register/Register';
 
 
@@ -25,18 +24,15 @@ function App() {
       <div>
         <h1>Ilodivido</h1>
         <BrowserRouter>
-        <nav>
-          <ul>
-            <li><Link to="/register">Register</Link></li>
-            <li><Link to="/login">Login</Link></li>
-          </ul>
-        </nav>
         <Switch>
           <Route path="/login">
-            <Login/>
+            {loggedIn ? <Redirect to="/"/> :<Login setLoggedin={setLoggedin}/>}
           </Route>
           <Route path='/register'>
             {registered ? <Redirect to="/login" />:<Register setRegistered={setRegistered}/>}
+          </Route>
+          <Route path='/'>
+            <PrivateWrapper loggedIn={loggedIn} logout={()=>{setLoggedin(false);console.log('signed out')}}/>
           </Route>
         </Switch>
         </BrowserRouter>

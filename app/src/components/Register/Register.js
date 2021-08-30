@@ -1,28 +1,13 @@
-import { gql, useMutation} from '@apollo/client';
+import { useMutation} from '@apollo/client';
 import React, {useState} from 'react';
+import { ADD_USER} from '../../graphql_const';
+import { Link } from 'react-router-dom';
 //import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 // https://www.apollographql.com/docs/react/data/mutations/
 //https://www.apollographql.com/docs/react/get-started/
 //https://medium.com/nerd-for-tech/how-to-build-forms-with-multiple-input-fields-using-react-hooks-677da2b851aa
+// https://buddy.works/tutorials/how-to-connect-mongodb-to-graphql-server
 
-// Define mutation
-const ADD_USER = gql`
-  mutation add_User($username: String!, $email: String!, $password: String!) {
-    
-    addUser(
-        username: $username
-        email: $email
-        password: $password
-        ) 
-        
-        {
-        username
-        email
-        password
-        }
-  }
-  
-`;
 
 export default function Register({setRegistered}) {
 
@@ -33,10 +18,11 @@ export default function Register({setRegistered}) {
   if (loading) return 'Submitting...';
   if (error) return `Submission error! ${error.message}`;
    
-  function handleSubmit(event){
+  async function handleSubmit(event){
     event.preventDefault();
-    addUser({variables:{username:user.username,email:user.email,password:user.password}});
+    await addUser({variables:{username:user.username,email:user.email,password:user.password}});
     setRegistered(true);
+    console.log('user registered')
   };
 
   function handleChange(event){
@@ -62,6 +48,9 @@ export default function Register({setRegistered}) {
             <div>
                 <button type="submit">Submit</button>
             </div>
+            <Link to='/login'>
+                <button>Login</button>
+            </Link>
         </form>
         
     </div>

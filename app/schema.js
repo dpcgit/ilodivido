@@ -1,3 +1,5 @@
+//https://dgraph.io/blog/post/designing-graphql-schemas/
+
 const { gql } = require('apollo-server-express')
 
 const typeDefs = gql`
@@ -9,7 +11,7 @@ const typeDefs = gql`
 
     type Query {
         users: [User],
-        user: User
+        user(username: String!): User 
     }
 
     type Mutation {

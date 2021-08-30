@@ -12,7 +12,7 @@ const resolvers = {
                 })
         },
         user (parent, args, context, info) {
-            return User.findOne({ _id: args.id })
+            return User.findOne({ username: args.username })
                 .then (user => {
                     return { ...user._doc }
                 })
