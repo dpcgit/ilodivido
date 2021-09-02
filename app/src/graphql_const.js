@@ -3,52 +3,42 @@
 
 import { gql } from '@apollo/client';
 
+
 export const ADD_USER = gql`
-  mutation add_User($username: String!, $email: String!, $password: String!) {
-    
-    addUser(
-        username: $username
-        email: $email
-        password: $password
-        ) 
-        
-        {
-        username
-        email
-        password
-        }
+mutation AddUserMutation($addUserInput: UserInput!) {
+  addUser(input: $addUserInput) {
+    id
+    username
+    email
+    password
+    location
   }
-  
+}
 `;
 
-export const GET_USERS = gql`
-  query get_Users {
-    users {
-      username
-    }
+export const ADD_TOOL = gql`
+mutation AddToolMutation($addToolInput: ToolInput!, $addToolUsername: String!) {
+  addTool(input: $addToolInput, username: $addToolUsername) {
+    name
+    description
+    power_tool
+    hourly_price
+    price
+    pictures
+    location
+    id
   }
+}  
 `;
 
-
-export const GET_USER = gql`
-  query get_User($username: String!) {
-    user (
-      username: $username
-    )
-    {
-      username
-    }
-  }
-`;
 
 export const GET_USER_CREDENTIALS = gql`
 query get_user_credentials($username: String!) {
-  user (
-    username: $username
-  )
+  user (username: $username)
   {
     username
     password
   }
 }
 `;
+

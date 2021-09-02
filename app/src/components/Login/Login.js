@@ -4,7 +4,7 @@ import { useQuery} from '@apollo/client';
 import { GET_USER_CREDENTIALS} from '../../graphql_const';
 import { Link } from 'react-router-dom';
 
-export default function Login({setLoggedin}) {
+export default function Login({setLoggedin,setusername}) {
 
   const [user,setUser] = useState({username:"",password:""});
   
@@ -18,8 +18,10 @@ export default function Login({setLoggedin}) {
     event.preventDefault();
    
    try {
+     
     if(data.user.username == user.username && data.user.password == user.password){
       setLoggedin(true)
+      setusername(data.user.username)
       console.log('logged in')
     }
     else{

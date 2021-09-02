@@ -11,7 +11,8 @@ function App() {
   //states that handle/help with conditional rendering/redirection
   const [loggedIn,setLoggedin] = useState(false);
   const [registered,setRegistered] = useState(false);
-  
+  const [user,setUser] =useState('');
+
   // effect that sets registered to false right after it's changed to true by the 
   // submit handler in the register component, as without it we cannot visit register again
   // after registered is set to true: {registered ? <Redirect to="/login" />:<Register setRegistered={setRegistered}/>}
@@ -26,13 +27,13 @@ function App() {
         <BrowserRouter>
         <Switch>
           <Route path="/login">
-            {loggedIn ? <Redirect to="/"/> :<Login setLoggedin={setLoggedin}/>}
+            {loggedIn ? <Redirect to="/"/> :<Login setLoggedin={setLoggedin} setusername={setUser}/>}
           </Route>
           <Route path='/register'>
             {registered ? <Redirect to="/login" />:<Register setRegistered={setRegistered}/>}
           </Route>
           <Route path='/'>
-            <PrivateWrapper loggedIn={loggedIn} logout={()=>{setLoggedin(false);console.log('signed out')}}/>
+            <PrivateWrapper username={user} loggedIn={loggedIn} logout={()=>{setLoggedin(false);console.log('signed out')}}/>
           </Route>
         </Switch>
         </BrowserRouter>

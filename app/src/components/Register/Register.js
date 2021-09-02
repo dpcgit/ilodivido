@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 export default function Register({setRegistered}) {
 
-  const [user,setUser] = useState({username:"",email:"",password:""});
+  const [user,setUser] = useState({username:"",email:"",password:"", location:''});
   
   const [addUser, { data, loading, error }] = useMutation(ADD_USER);
 
@@ -20,7 +20,7 @@ export default function Register({setRegistered}) {
    
   async function handleSubmit(event){
     event.preventDefault();
-    await addUser({variables:{username:user.username,email:user.email,password:user.password}});
+    addUser({variables:{addUserInput:user}})
     setRegistered(true);
     console.log('user registered')
   };
