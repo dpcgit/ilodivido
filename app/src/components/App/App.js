@@ -9,7 +9,6 @@ import Register from '../Register/Register';
 function App() {
 
   //states that handle/help with conditional rendering/redirection
-  const [loggedIn,setLoggedin] = useState(false);
   const [registered,setRegistered] = useState(false);
   const [user,setUser] =useState('');
 
@@ -20,7 +19,23 @@ function App() {
   useEffect(()=>{
     setRegistered(false);
   });
+
+  // Logic to save login state to storage, it's a a pain having to log in every single time 
+  // https://typeofnan.dev/using-session-storage-in-react-with-hooks/
+  function getStorageKey(key,defaultVal){
+    const stored_key = sessionStorage.getItem(key);
+    if(!stored_key){
+      return defaultVal;
+    }
+    return JSON.parse(stored_key);
+  }
+  
+  const [loggedIn,setLoggedin] = useState(getStorageKey('loggedIn',false));
    
+  useEffect(()=>{
+    sessionStorage.setItem('loggedIn',JSON.stringify(loggedIn))
+  });
+ //
   return (
       <div>
         <h1>Ilodivido</h1>
