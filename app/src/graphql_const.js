@@ -16,6 +16,15 @@ mutation AddUserMutation($addUserInput: UserInput!) {
 }
 `;
 
+export const GET_TOOLS = gql`
+query get_tools {
+  tools {
+    name
+    description
+  }
+}
+`;
+
 export const ADD_TOOL = gql`
 mutation AddToolMutation($addToolInput: ToolInput!, $addToolUsername: String!) {
   addTool(input: $addToolInput, username: $addToolUsername) {
@@ -42,3 +51,12 @@ query get_user_credentials($username: String!) {
 }
 `;
 
+export const GET_TOOLS_BY_NAME = gql`
+query get_tools_by_name($name: String!) {
+  tool (name: $name)
+  {
+    name
+    description
+  }
+}
+`;

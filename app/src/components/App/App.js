@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { Link, BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import PrivateWrapper from '../PrivateWrapper/PrivateWrapper';
 import Login from '../Login/Login';
 import Register from '../Register/Register';

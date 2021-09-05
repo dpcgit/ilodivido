@@ -45,8 +45,10 @@ const typeDefs = gql`
     }
 
     type Query {
-        users: [User],
+        users: [User]
         user(username: String!): User 
+        tools: [Tool]
+        tool(name: String!): [Tool]
     }
 
     type Mutation {

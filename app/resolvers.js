@@ -23,6 +23,33 @@ const resolvers = {
             }catch(error){
                 console.error(error.message);
             }
+        },
+        tools (parent,args,context,info){
+            return Tool.find()
+            .then (tool => {
+                console.log('Type of object found: ', typeof(tool))
+                console.log(tool)
+                const tools = tool.map (u => ({ ...u._doc }))
+                console.log('Type of object returned: ', typeof(tools))
+                console.log(tools)
+                return tools
+            })
+            .catch (err => {
+                console.error(err)
+            })
+        },
+        tool: async (parents,args,contect,info) => {
+            try{
+                console.log(args)
+                const regexp = new RegExp(args.name,'i');
+                //console.log('Regexp: ', regexp)
+                //const tools = await Tool.find({name: args.name});                
+                const tools = await Tool.find({name: {$regex:regexp}});      
+                console.log(tools)          
+                return tools;
+            }catch(error){
+                console.error(error.message);
+            }
         }
     },
     Mutation: {
