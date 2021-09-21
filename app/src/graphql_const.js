@@ -26,8 +26,8 @@ query get_tools {
 `;
 
 export const ADD_TOOL = gql`
-mutation AddToolMutation($addToolInput: ToolInput!, $addToolUsername: String!) {
-  addTool(input: $addToolInput, username: $addToolUsername) {
+mutation AddToolMutation($addToolInput: ToolInput!, $addToolUsername: String!, $file: Upload!) {
+  addTool(input: $addToolInput, username: $addToolUsername, tool_picture: $file) {
     name
     description
     power_tool

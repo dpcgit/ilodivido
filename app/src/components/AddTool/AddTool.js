@@ -7,7 +7,8 @@ import { ADD_TOOL} from '../../graphql_const';
 //https://www.apollographql.com/docs/react/get-started/
 //https://medium.com/nerd-for-tech/how-to-build-forms-with-multiple-input-fields-using-react-hooks-677da2b851aa
 // https://buddy.works/tutorials/how-to-connect-mongodb-to-graphql-server
-
+// https://www.pluralsight.com/guides/how-to-use-a-simple-form-submit-with-files-in-react
+//https://medium.com/@enespalaz/file-upload-with-graphql-9a4927775ef7
 
 export default function AddTool({user_name}) {
 
@@ -19,6 +20,7 @@ export default function AddTool({user_name}) {
                                     pictures:'',
                                     location:''
     });
+  const [toolPicture,setToolPicture] = useState('null');
   
   const [addTool, { data, loading, error }] = useMutation(ADD_TOOL);
 
@@ -27,8 +29,9 @@ export default function AddTool({user_name}) {
    
   async function handleSubmit(event){
     event.preventDefault();
+    console.log('File to be submited: ', toolPicture)
     console.log('User to be modified: ',user_name)
-    await addTool({variables:{addToolInput:tool,addToolUsername:user_name}});
+    await addTool({variables:{addToolInput:tool,addToolUsername:user_name,file:toolPicture}});
     console.log('tool added')
   };
 
@@ -39,7 +42,7 @@ export default function AddTool({user_name}) {
   return(
     <div className="add-tool-wrapper">
         <h1>Add Tool</h1>
-        <p>Username to be modified: {user_name}</p>
+        <p>Username to be modified: {user_name}</p> 
         <form onSubmit={e=>handleSubmit(e)}>
             <label>
                 <p>Name</p>
@@ -63,7 +66,7 @@ export default function AddTool({user_name}) {
             </label>
             <label>
                 <p>Pictures</p>
-                <input type="text" name="pictures" onChange={e=>handleChange(e)}/>
+                <input type="file" name="pictures" onChange={e=>{setToolPicture(e.target.files[0]); console.log(toolPicture)}}/>
             </label>
             <label>
                 <p>Location</p>

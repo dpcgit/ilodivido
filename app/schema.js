@@ -2,10 +2,12 @@
 //https://medium.com/swlh/populate-subdocument-in-graphql-4e7f9ede5a1c
 //  https://www.apollographql.com/docs/apollo-server/schema/schema/
 //https://graphql.org/graphql-js/mutations-and-input-types/
-
+// https://www.apollographql.com/docs/apollo-server/data/file-uploads/
 const { gql } = require('apollo-server-express')
 
 const typeDefs = gql`
+    scalar Upload
+    
     type User {
         id: ID!
         username: String
@@ -53,7 +55,7 @@ const typeDefs = gql`
 
     type Mutation {
         addUser (input: UserInput!): User    
-        addTool (input: ToolInput!, username: String!): Tool
+        addTool (input: ToolInput!, username: String!, tool_picture: Upload): Tool
     }
 
 `
