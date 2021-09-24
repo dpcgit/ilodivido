@@ -1,5 +1,5 @@
 import { useMutation} from '@apollo/client';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { ADD_TOOL} from '../../graphql_const';
 //import { Link } from 'react-router-dom';
 //import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
@@ -9,6 +9,20 @@ import { ADD_TOOL} from '../../graphql_const';
 // https://buddy.works/tutorials/how-to-connect-mongodb-to-graphql-server
 // https://www.pluralsight.com/guides/how-to-use-a-simple-form-submit-with-files-in-react
 //https://medium.com/@enespalaz/file-upload-with-graphql-9a4927775ef7
+//
+
+
+
+function uploadFile(file, url) {
+    fetch(url, {
+        method: 'PUT',
+        body: file
+    }).then(() => {
+        console.log('File uploaded to bucket: ', file.name)
+    }).catch((e) => {
+        console.error(e);
+    });
+}
 
 export default function AddTool({user_name}) {
 
@@ -22,6 +36,31 @@ export default function AddTool({user_name}) {
     });
   const [toolPicture,setToolPicture] = useState('null');
   
+  const [toolPictureURL,setToolPictureURL] = useState()
+  useEffect(()=>{
+
+    async function retrieveNewURL(file) {
+        try{
+            console.log('File name to be:', file.name)
+            const response = await fetch(`/presignedUrl?name=${file.name}`)
+            console.log('Upload URL response: ', response)
+            const url = await response.text();
+            //  console.log('Upload URL: ', url)
+            return url;
+        }
+        catch(error){
+            console.log(error.message)
+        }
+    }
+
+    (async () => {
+        const picture_url = await retrieveNewURL(toolPicture);
+        console.log('Picture url: ', picture_url)
+        setToolPictureURL(picture_url)
+    })();    
+    
+  },[toolPicture]);
+  
   const [addTool, { data, loading, error }] = useMutation(ADD_TOOL);
 
   if (loading) return 'Submitting...';
@@ -30,7 +69,10 @@ export default function AddTool({user_name}) {
   async function handleSubmit(event){
     event.preventDefault();
     console.log('File to be submited: ', toolPicture)
+    console.log('Picture url: ', toolPictureURL)
+    await uploadFile(toolPicture,toolPictureURL)    
     console.log('User to be modified: ',user_name)
+    setTool({...tool,['pictures']:toolPictureURL});
     await addTool({variables:{addToolInput:tool,addToolUsername:user_name,file:toolPicture}});
     console.log('tool added')
   };
