@@ -6,7 +6,6 @@
 const { gql } = require('apollo-server-express')
 
 const typeDefs = gql`
-    scalar Upload
     
     type User {
         id: ID!
@@ -55,7 +54,7 @@ const typeDefs = gql`
 
     type Mutation {
         addUser (input: UserInput!): User    
-        addTool (input: ToolInput!, username: String!, tool_picture: Upload): Tool
+        addTool (input: ToolInput!, username: String!): Tool
     }
 
 `

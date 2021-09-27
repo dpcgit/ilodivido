@@ -39,13 +39,13 @@ export default function AddTool({user_name}) {
   const [toolPictureURL,setToolPictureURL] = useState()
   useEffect(()=>{
 
-    async function retrieveNewURL(file) {
+    async function retrieveNewURL(file,username) {
         try{
             console.log('File name to be:', file.name)
-            const response = await fetch(`/presignedUrl?name=${file.name}`)
+            const response = await fetch(`/presignedUrl?name=${file.name}&username=${username}`)
             console.log('Upload URL response: ', response)
             const url = await response.text();
-            //  console.log('Upload URL: ', url)
+            console.log('Upload URL: ', url)
             return url;
         }
         catch(error){
@@ -54,9 +54,10 @@ export default function AddTool({user_name}) {
     }
 
     (async () => {
-        const picture_url = await retrieveNewURL(toolPicture);
+        const picture_url = await retrieveNewURL(toolPicture, user_name);
         console.log('Picture url: ', picture_url)
         setToolPictureURL(picture_url)
+        console.log('effect: ',toolPicture)
     })();    
     
   },[toolPicture]);
@@ -69,11 +70,13 @@ export default function AddTool({user_name}) {
   async function handleSubmit(event){
     event.preventDefault();
     console.log('File to be submited: ', toolPicture)
-    console.log('Picture url: ', toolPictureURL)
+    //console.log('Picture url: ', toolPictureURL)
     await uploadFile(toolPicture,toolPictureURL)    
     console.log('User to be modified: ',user_name)
-    setTool({...tool,['pictures']:toolPictureURL});
-    await addTool({variables:{addToolInput:tool,addToolUsername:user_name,file:toolPicture}});
+    const new_tool = {...tool,['pictures']:toolPicture.name}
+    console.log('NEW TOOL', new_tool)
+    await setTool(new_tool);
+    await addTool({variables:{addToolInput:new_tool,addToolUsername:user_name/*,file:toolPicture*/}});
     console.log('tool added')
   };
 

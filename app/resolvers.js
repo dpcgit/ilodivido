@@ -1,11 +1,11 @@
 //https://medium.com/swlh/populate-subdocument-in-graphql-4e7f9ede5a1c
-const fs = require('fs')
+//const fs = require('fs')
 const User = require('./user-model');
 const Tool = require('./tool-model');
-const { GraphQLUpload } = require('graphql-upload');
+//const { GraphQLUpload } = require('graphql-upload');
 
 const resolvers = {
-    Upload: GraphQLUpload,
+    /*Upload: GraphQLUpload,*/
     Query: {
         users (parent, args, context, info) {
             return User.find()
@@ -69,11 +69,11 @@ const resolvers = {
         },
         addTool: async (parent,args,context,info) => {
             try{
-                console.log('File recived by resolver: ', args.tool_picture)
+                /*console.log('File recived by resolver: ', args.tool_picture)
                 const {createReadStream, filename, mimetype} = await args.tool_picture;                
                 const fileStream = await createReadStream()
                 fileStream.pipe(fs.createWriteStream(`./uploadedFiles/${filename}`));
-
+                */
                 console.log('Args pased to mongooose:',args)
                 const newTool = await Tool.create(args.input);
                 await newTool.save();

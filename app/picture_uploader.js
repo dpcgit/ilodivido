@@ -20,12 +20,31 @@ var client = new Minio.Client({
 // express is a small HTTP server wrapper, but this works with any HTTP server
 const server = require('express')()
 
-server.get('/presignedUrl', (req, res) => {
-    console.log(req.query.name)
-    client.presignedPutObject('uploads', req.query.name, (err, url) => {
-        if (err) throw err
-        res.send(url)
-    })
+server.get('/presignedUrl', async (req, res) => {
+  
+    const file_name = req.query.name;
+    console.log('File name: ', file_name)
+    const user_name = req.query.username;
+    console.log('User name: ', user_name)
+
+    try {
+        const exists = await client.bucketExists(user_name)
+        if (exists){
+            console.log('User already exists')
+            const upload_url = await client.presignedPutObject(user_name,file_name);
+            res.send(upload_url)
+        }
+        else {
+            console.log('user does not exist, creating bucket')
+            await client.makeBucket(user_name)
+            const upload_url = await client.presignedPutObject(user_name,file_name);
+            res.send(upload_url)
+        }
+
+
+    } catch(e) {
+        console.log(e)
+    }
 })
 
 server.get('/', (req, res) => {
