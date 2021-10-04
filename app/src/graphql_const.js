@@ -60,3 +60,14 @@ query get_tools_by_name($name: String!) {
   }
 }
 `;
+
+export const GET_TOOLS_BY_USER = gql`
+query get_tools_by_user($toolsByUserUser: String!) {
+  tools_by_user(user: $toolsByUserUser)
+  {
+    name
+    description
+    pictures
+  }
+}
+`;

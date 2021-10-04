@@ -1,26 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useQuery} from '@apollo/client';
-import { GET_TOOLS_BY_NAME} from '../../graphql_const';
+import { GET_TOOLS_BY_NAME, GET_TOOLS_BY_USER} from '../../graphql_const';
 
-export default function SearchTool() {
+export default function SearchTool({user_name}) {
     
     const [tool,setTool] = useState(); //state was not set to an empty string in order to avoid useQuery
     // fetching queries on every refresh/rerender using '' as search string
     const [toolList,setToolList] = useState('');
     const {data, loading, error} = useQuery(GET_TOOLS_BY_NAME,{variables:{name:tool}});
-
+    const a = useQuery(GET_TOOLS_BY_USER,{variables:{toolsByUserUser:user_name}});
+    
     function handleChange(event){
         setTool(event.target.value);
         
     };
 
-    function handleSubmit(event){
+      async function handleSubmit(event){
         event.preventDefault()
         console.log(event.target)
         console.log('Tool name to be searched: ',tool)
-        console.log(data)
-
-        setToolList(JSON.stringify(data,null, 2))
+        //console.log(data)
+        console.log(a)
+        const string_obj = await JSON.stringify(a.data,null, '\t')
+        //console.log('Tool string', string_obj)
+        await setToolList(string_obj)        
+        //console.log('Tool list', toolList)
     }
 
     return(
@@ -32,7 +36,7 @@ export default function SearchTool() {
             </label>
             <button type='submit'>Search</button>            
           </form>
-          <code>{toolList}</code>
+          <pre>{toolList}</pre>
       </div>
     
   );

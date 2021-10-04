@@ -31,7 +31,7 @@ export default function AddTool({user_name}) {
                                     power_tool:'',
                                     hourly_price:'',
                                     price:'',
-                                    pictures:'',
+                                    pictures:[],
                                     location:''
     });
   const [toolPicture,setToolPicture] = useState('null');
@@ -73,7 +73,7 @@ export default function AddTool({user_name}) {
     //console.log('Picture url: ', toolPictureURL)
     await uploadFile(toolPicture,toolPictureURL)    
     console.log('User to be modified: ',user_name)
-    const new_tool = {...tool,['pictures']:toolPicture.name}
+    const new_tool = {...tool,['pictures']:[toolPicture.name]}
     console.log('NEW TOOL', new_tool)
     await setTool(new_tool);
     await addTool({variables:{addToolInput:new_tool,addToolUsername:user_name/*,file:toolPicture*/}});

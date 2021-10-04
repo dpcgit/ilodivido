@@ -18,7 +18,7 @@ const ToolSchema = new Schema({
         type: String
     },
     pictures: {
-        type: String
+        type: [String]
     },
     location:{
         type: String

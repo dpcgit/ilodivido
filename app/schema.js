@@ -23,7 +23,7 @@ const typeDefs = gql`
         power_tool:String
         hourly_price:String
         price:String
-        pictures:String
+        pictures: [String]
         location: String
     }
 
@@ -41,7 +41,7 @@ const typeDefs = gql`
         power_tool:String
         hourly_price:String
         price:String
-        pictures:String
+        pictures:[String]
         location: String
     }
 
@@ -49,7 +49,8 @@ const typeDefs = gql`
         users: [User]
         user(username: String!): User 
         tools: [Tool]
-        tool(name: String!): [Tool]
+        tool (name: String!): [Tool]
+        tools_by_user (user: String!): [Tool]
     }
 
     type Mutation {

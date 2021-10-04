@@ -32,8 +32,8 @@ function PrivateWrapper({loggedIn,logout,username}) {
           <Route path='/add-tool'>
             <AddTool user_name={username}/>
           </Route>
-          <Route>
-            <SearchTool path='/search-tool'/>
+          <Route path='/search-tool'>
+            <SearchTool user_name={username}/>
           </Route>
         </Switch>
         </BrowserRouter>

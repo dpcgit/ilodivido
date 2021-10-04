@@ -47,6 +47,21 @@ server.get('/presignedUrl', async (req, res) => {
     }
 })
 
+server.get('/presignedURLDown', async(req,res)=> {
+    const file_name = req.query.name;
+    console.log('File name: ', file_name)
+    const user_name = req.query.username;
+    console.log('User name: ', user_name)
+
+    try {
+        const down_url = await client.presignedGetObject(user_name,file_name)
+        res.send(down_url)
+    } catch(e) {
+        console.log(e)
+    }
+})
+
+
 server.get('/', (req, res) => {
     res.send('jeje');
 })
