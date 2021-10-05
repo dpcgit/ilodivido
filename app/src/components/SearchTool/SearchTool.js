@@ -8,7 +8,7 @@ export default function SearchTool({user_name}) {
     // fetching queries on every refresh/rerender using '' as search string
     const [toolList,setToolList] = useState('');
     const {data, loading, error} = useQuery(GET_TOOLS_BY_NAME,{variables:{name:tool}});
-    const a = useQuery(GET_TOOLS_BY_USER,{variables:{toolsByUserUser:user_name}});
+    const a = useQuery(GET_TOOLS_BY_USER,{variables:{toolsByUserUser:user_name}, fetchPolicy: 'network-only'});
     
     function handleChange(event){
         setTool(event.target.value);

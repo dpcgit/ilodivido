@@ -2,7 +2,25 @@
 //const fs = require('fs')
 const User = require('./user-model');
 const Tool = require('./tool-model');
+const got = require('got');
+const http = require('http');
 //const { GraphQLUpload } = require('graphql-upload');
+
+
+
+async function downloadURL(file,username) {
+    try{
+        //console.log('File name to be:', file)
+        const response = await got.get(`http:localhost:8080/presignedURLDown?name=${file}&username=${username}`)
+        //console.log('Download URL response: ', response)
+        const url = await response.body
+        //console.log('Download URL: ', url)
+        return(url)
+    }
+    catch(error){
+        console.log(error.message)
+    }
+}
 
 const resolvers = {
     /*Upload: GraphQLUpload,*/
@@ -49,6 +67,30 @@ const resolvers = {
                 const tools = await Tool.find({name: {$regex:regexp}});      
                 console.log(tools)          
                 return tools;
+            }catch(error){
+                console.error(error.message);
+            }
+        },
+        tools_by_user: async (parents,args,contect,info) => {
+            try{
+                console.log('Getting tools by user')
+                const user_that_has_tools = await User.find({username: args.user}).populate('tools');      
+                console.log('Tools by user: ',user_that_has_tools[0].tools)          
+                
+                
+                const final_urls = await user_that_has_tools[0].tools.map(async tool => 
+                    {const urls = await Promise.all(tool.pictures.map(async (picture) => {
+                        return  await downloadURL(picture,args.user)                        
+                        })
+
+                    )
+                    
+                    tool.pictures = urls
+                    //console.log('New tool:', tool)
+                    return tool
+                    }
+                    ) 
+                return final_urls;
             }catch(error){
                 console.error(error.message);
             }
