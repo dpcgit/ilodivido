@@ -34,10 +34,12 @@ export default function AddTool({user_name}) {
                                     pictures:[],
                                     location:''
     });
-  const [toolPicture,setToolPicture] = useState('null');
+  const [toolPicture,setToolPicture] = useState();
   
   const [toolPictureURL,setToolPictureURL] = useState()
   useEffect(()=>{
+
+    console.log('toolpicture object: ', toolPicture)
 
     async function retrieveNewURL(file,username) {
         try{
@@ -54,10 +56,18 @@ export default function AddTool({user_name}) {
     }
 
     (async () => {
-        const picture_url = await retrieveNewURL(toolPicture, user_name);
-        console.log('Picture url: ', picture_url)
-        setToolPictureURL(picture_url)
-        console.log('effect: ',toolPicture)
+        if (toolPicture != undefined){
+            const picture_url = await Promise.all(Array.from(toolPicture).map(
+                async (tool_picture) =>
+                {
+                    return await retrieveNewURL(tool_picture, user_name)
+                }            
+            )
+            );
+            console.log('Picture url: ', picture_url)
+            setToolPictureURL(picture_url)
+            console.log('effect: ',toolPicture)
+        };
     })();    
     
   },[toolPicture]);
@@ -71,9 +81,12 @@ export default function AddTool({user_name}) {
     event.preventDefault();
     console.log('File to be submited: ', toolPicture)
     //console.log('Picture url: ', toolPictureURL)
-    await uploadFile(toolPicture,toolPictureURL)    
+    //await uploadFile(toolPicture,toolPictureURL)
+    toolPictureURL.map(async (url,url_index)=>{
+        await uploadFile(toolPicture[url_index],url)
+    })    
     console.log('User to be modified: ',user_name)
-    const new_tool = {...tool,['pictures']:[toolPicture.name]}
+    const new_tool = {...tool,['pictures']:Array.from(toolPicture).map(tool_picture=>tool_picture.name)}
     console.log('NEW TOOL', new_tool)
     await setTool(new_tool);
     await addTool({variables:{addToolInput:new_tool,addToolUsername:user_name/*,file:toolPicture*/}});
@@ -111,7 +124,7 @@ export default function AddTool({user_name}) {
             </label>
             <label>
                 <p>Pictures</p>
-                <input type="file" name="pictures" onChange={e=>{setToolPicture(e.target.files[0]); console.log(toolPicture)}}/>
+                <input type="file" multiple name="pictures" onChange={e=>{setToolPicture(e.target.files); console.log('toolPicture: ',toolPicture)}}/>
             </label>
             <label>
                 <p>Location</p>
