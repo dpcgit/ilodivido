@@ -124,7 +124,7 @@ export default function AddTool({user_name}) {
             </label>
             <label>
                 <p>Pictures</p>
-                <input type="file" multiple name="pictures" onChange={e=>{setToolPicture(e.target.files); console.log('toolPicture: ',toolPicture)}}/>
+                <input type="file" multiple name="pictures" accept="image/png, image/gif, image/jpeg" onChange={e=>{setToolPicture(e.target.files); console.log('toolPicture: ',toolPicture)}}/>
             </label>
             <label>
                 <p>Location</p>
