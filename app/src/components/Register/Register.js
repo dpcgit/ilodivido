@@ -1,4 +1,6 @@
 import { useMutation} from '@apollo/client';
+import { useDispatch } from 'react-redux';
+import { setRegistered } from '../App/AppSlice'
 import React, {useState} from 'react';
 import { ADD_USER} from '../../graphql_const';
 import { Link } from 'react-router-dom';
@@ -9,10 +11,9 @@ import { Link } from 'react-router-dom';
 // https://buddy.works/tutorials/how-to-connect-mongodb-to-graphql-server
 
 
-export default function Register({setRegistered}) {
-
+export default function Register() {
   const [user,setUser] = useState({username:"",email:"",password:"", location:''});
-  
+  const dispatch = useDispatch();
   const [addUser, { data, loading, error }] = useMutation(ADD_USER);
 
   if (loading) return 'Submitting...';
@@ -21,7 +22,7 @@ export default function Register({setRegistered}) {
   async function handleSubmit(event){
     event.preventDefault();
     addUser({variables:{addUserInput:user}})
-    setRegistered(true);
+    dispatch(setRegistered({registered:true}));
     console.log('user registered')
   };
 

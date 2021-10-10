@@ -7,6 +7,8 @@ import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 import {ApolloClient, InMemoryCache, ApolloProvider} from "@apollo/client";
 //import { createUploadLink } from 'apollo-upload-client';
+import store from './store'
+import { Provider } from 'react-redux'
 
 /*
 const uploadLink = createUploadLink({
@@ -28,7 +30,9 @@ const client = new ApolloClient({
 ReactDOM.render(
 <ApolloProvider client={client}>
 <React.StrictMode>
+  <Provider store={store}>
     <App />
+  </Provider>
   </React.StrictMode>
   </ApolloProvider>,
   document.getElementById('root')
