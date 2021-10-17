@@ -35,7 +35,7 @@ export default function AddTool({user_name}) {
                                     location:''
     });
   const [toolPicture,setToolPicture] = useState();
-  
+
   const [toolPictureURL,setToolPictureURL] = useState()
   useEffect(()=>{
 
@@ -61,22 +61,22 @@ export default function AddTool({user_name}) {
                 async (tool_picture) =>
                 {
                     return await retrieveNewURL(tool_picture, user_name)
-                }            
+                }
             )
             );
             console.log('Picture url: ', picture_url)
             setToolPictureURL(picture_url)
             console.log('effect: ',toolPicture)
         };
-    })();    
-    
+    })();
+
   },[toolPicture]);
-  
+
   const [addTool, { data, loading, error }] = useMutation(ADD_TOOL);
 
   if (loading) return 'Submitting...';
   if (error) return `Submission error! ${error.message}`;
-   
+
   async function handleSubmit(event){
     event.preventDefault();
     console.log('File to be submited: ', toolPicture)
@@ -84,7 +84,7 @@ export default function AddTool({user_name}) {
     //await uploadFile(toolPicture,toolPictureURL)
     toolPictureURL.map(async (url,url_index)=>{
         await uploadFile(toolPicture[url_index],url)
-    })    
+    })
     console.log('User to be modified: ',user_name)
     const new_tool = {...tool,['pictures']:Array.from(toolPicture).map(tool_picture=>tool_picture.name)}
     console.log('NEW TOOL', new_tool)
@@ -100,41 +100,41 @@ export default function AddTool({user_name}) {
   return(
     <div className="add-tool-wrapper">
         <h1>Add Tool</h1>
-        <p>Username to be modified: {user_name}</p> 
+        <p>Username to be modified: {user_name}</p>
         <form onSubmit={e=>handleSubmit(e)}>
             <label>
                 <p>Name</p>
-                <input type="text" name="name" onChange={e=>handleChange(e)}/>
+                <input type="text" name="name" required onChange={e=>handleChange(e)}/>
             </label>
             <label>
                 <p>Description</p>
-                <input type="text" name="description" onChange={e=>handleChange(e)}/>
+                <input type="text" name="description" required onChange={e=>handleChange(e)}/>
             </label>
             <label>
                 <p>Powertool?</p>
-                <input type="text" name="power_tool" onChange={e=>handleChange(e)}/>
+                <input type="text" name="power_tool" onChange={e=>handleChange(e)} required/>
             </label>
             <label>
                 <p>HourlyPrice?</p>
-                <input type="text" name="hourly_price" onChange={e=>handleChange(e)}/>
+                <input type="text" name="hourly_price" onChange={e=>handleChange(e)} required/>
             </label>
             <label>
                 <p>Price</p>
-                <input type="text" name="price" onChange={e=>handleChange(e)}/>
+                <input type="text" name="price" onChange={e=>handleChange(e)} required/>
             </label>
             <label>
                 <p>Pictures</p>
-                <input type="file" multiple name="pictures" accept="image/png, image/gif, image/jpeg" onChange={e=>{setToolPicture(e.target.files); console.log('toolPicture: ',toolPicture)}}/>
+                <input type="file" multiple name="pictures" accept="image/png, image/gif, image/jpeg" onChange={e=>{setToolPicture(e.target.files); console.log('toolPicture: ',toolPicture)}} required/>
             </label>
             <label>
                 <p>Location</p>
-                <input type="text" name="location" onChange={e=>handleChange(e)}/>
+                <input type="text" name="location" onChange={e=>handleChange(e)} required/>
             </label>
             <div>
                 <button type="submit">Add Tool</button>
             </div>
         </form>
-        
+
     </div>
   )
 }

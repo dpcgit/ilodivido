@@ -16,19 +16,19 @@ function PrivateWrapper() {
   const location = useSelector((state)=>state.app.location)
   const loggedIn = useSelector((state)=>state.app.logged_in)
   const username = useSelector((state)=>state.app.username)
-  
+
   useEffect(()=>{
-    
+
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition((pos)=>{
         dispatch(setLocation({location:[pos.coords.latitude,pos.coords.longitude]}))
-        //console.log('location in state: ',location)    
+        //console.log('location in state: ',location)
       })
     }
     else{
       dispatch(setLocation({location:['']}))
     }
-    
+
   },[location])
 
   if(!loggedIn){
@@ -57,7 +57,7 @@ function PrivateWrapper() {
           <Route path='/add-tool'>
             <AddTool user_name={username}/>
           </Route>
-          <Route path='/search-tool'>
+          <Route path='/search-tool*'>
             <SearchTool user_name={username}/>
           </Route>
         </Switch>

@@ -6,7 +6,7 @@
 const { gql } = require('apollo-server-express')
 
 const typeDefs = gql`
-    
+
     type User {
         id: ID!
         username: String
@@ -14,17 +14,17 @@ const typeDefs = gql`
         password: String
         location: String
         tools: [Tool]
-    }  
+    }
 
     type Tool{
         id: ID!
-        name:String
-        description:String
-        power_tool:String
-        hourly_price:String
-        price:String
-        pictures: [String]
-        location: String
+        name:String!
+        description:String!
+        power_tool:String!
+        hourly_price:String!
+        price:String!
+        pictures: [String]!
+        location: String!
     }
 
     input UserInput {
@@ -36,25 +36,25 @@ const typeDefs = gql`
     }
 
     input ToolInput {
-        name:String
-        description:String
-        power_tool:String
-        hourly_price:String
-        price:String
-        pictures:[String]
-        location: String
+        name:String!
+        description:String!
+        power_tool:String!
+        hourly_price:String!
+        price:String!
+        pictures:[String]!
+        location: String!
     }
 
     type Query {
         users: [User]
-        user(username: String!): User 
+        user(username: String!): User
         tools: [Tool]
         tool (name: String!): [Tool]
         tools_by_user (user: String!): [Tool]
     }
 
     type Mutation {
-        addUser (input: UserInput!): User    
+        addUser (input: UserInput!): User
         addTool (input: ToolInput!, username: String!): Tool
     }
 

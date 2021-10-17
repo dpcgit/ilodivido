@@ -3,25 +3,32 @@ const { Schema } = mongoose;
 
 const ToolSchema = new Schema({
     name: {
-        type: String
+        type: String,
+        required: true
     },
     description: {
-        type: String
+        type: String,
+        required: true
     },
     power_tool:{
-        type: String
+        type: String,
+        required: true
     },
     hourly_price: {
-        type: String
+        type: String,
+        required: true
     },
     price: {
-        type: String
+        type: String,
+        required: true
     },
     pictures: {
-        type: [String]
+        type: [String],
+        required: true
     },
     location:{
-        type: String
+        type: String,
+        required: true
     }
 
 })
