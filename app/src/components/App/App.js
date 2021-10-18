@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoggedIn, setRegistered } from './AppSlice'
 import './App.css';
@@ -10,7 +10,7 @@ import Register from '../Register/Register';
 
 function App() {
 
-  // Logic to save login state to storage, it's a a pain having to log in every single time 
+  // Logic to save login state to storage, it's a a pain having to log in every single time
   // https://typeofnan.dev/using-session-storage-in-react-with-hooks/
   function getStorageKey(key,defaultVal){
     const stored_key = localStorage.getItem(key);
@@ -20,7 +20,7 @@ function App() {
     console.log('stored key',JSON.parse(stored_key))
     return JSON.parse(stored_key);
   }
-  
+
 
 
   const dispatch = useDispatch()
@@ -30,8 +30,8 @@ function App() {
   const loggedIn = useSelector((state)=>state.app.logged_in)
   console.log('Logged in? ',loggedIn)
   const registered = useSelector((state)=> state.app.registered)
-  
-  // effect that sets registered to false right after it's changed to true by the 
+
+  // effect that sets registered to false right after it's changed to true by the
   // submit handler in the register component, as without it we cannot visit register again
   // after registered is set to true: {registered ? <Redirect to="/login" />:<Register setRegistered={setRegistered}/>}
 

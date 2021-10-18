@@ -1,7 +1,7 @@
 //https://www.debuggr.io/react-update-unmounted-component/
 //https://stackoverflow.com/questions/53949393/cant-perform-a-react-state-update-on-an-unmounted-component
 
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Preferences from '../Preferences/Preferences';

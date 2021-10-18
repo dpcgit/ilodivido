@@ -1,10 +1,14 @@
 //https://dgraph.io/blog/post/designing-graphql-schemas/
 import React, {useState} from 'react';
 import { useDispatch } from 'react-redux';
+import { Form, Input, Button} from 'antd'
 import { setUser,setLoggedIn } from '../App/AppSlice'
 import { useQuery} from '@apollo/client';
 import { GET_USER_CREDENTIALS} from '../../graphql_const';
 import { Link } from 'react-router-dom';
+
+import 'antd/dist/antd.css';
+
 
 export default function Login() {
 
@@ -19,8 +23,8 @@ export default function Login() {
   async function handleSubmit(event){
     event.preventDefault();
    try {
-     
-    if(data.user.username == user_info.username && data.user.password == user_info.password){
+
+    if(data.user.username === user_info.username && data.user.password === user_info.password){
       dispatch(setUser({username:data.user.username}))
       dispatch(setLoggedIn({logged_in:true}))
       localStorage.setItem('loggedIn',JSON.stringify(true))
@@ -40,22 +44,22 @@ export default function Login() {
   return(
     <div className="login-wrapper">
         <h1>Please Log In</h1>
-        <form onSubmit={e=>handleSubmit(e)}>
+        <Form onSubmit={e=>handleSubmit(e)} layout='horizontal'>
             <label>
                 <p>Username</p>
-                <input type="text" name="username" onChange={e=>handleChange(e)}/>
+                <Input type="text" name="username" onChange={e=>handleChange(e)}/>
             </label>
             <label>
                 <p>Password</p>
-                <input type="password" name="password" onChange={e=>handleChange(e)}/>
+                <Input type="password" name="password" onChange={e=>handleChange(e)}/>
             </label>
             <div>
-                <button type="submit">Submit</button>
+                <Button type="submit" onClick={e=>handleSubmit(e)}>Submit</Button>
             </div>
               <Link to='/register'>
-                <button>Register</button>
+                <Button>Register</Button>
               </Link>
-        </form>        
+        </Form>
     </div>
   )
 }

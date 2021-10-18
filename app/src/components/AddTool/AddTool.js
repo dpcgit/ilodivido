@@ -56,7 +56,7 @@ export default function AddTool({user_name}) {
     }
 
     (async () => {
-        if (toolPicture != undefined){
+        if (toolPicture !== undefined){
             const picture_url = await Promise.all(Array.from(toolPicture).map(
                 async (tool_picture) =>
                 {
@@ -70,7 +70,7 @@ export default function AddTool({user_name}) {
         };
     })();
 
-  },[toolPicture]);
+  },[toolPicture,user_name]);
 
   const [addTool, { data, loading, error }] = useMutation(ADD_TOOL);
 

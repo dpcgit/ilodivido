@@ -1,7 +1,7 @@
 //https://reactrouter.com/web/example/modal-gallery
 
-import React, {useState, useEffect} from 'react';
-import { Route, Link } from 'react-router-dom';
+import React, {useState} from 'react';
+import { Route } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import { setToolList } from '../App/AppSlice'
 import { useQuery} from '@apollo/client';
