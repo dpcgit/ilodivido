@@ -8,7 +8,8 @@ export const appSlice = createSlice({
     registered: false,
     location:[''],
     tool_list:[],
-    selected_tool:undefined
+    selected_tool:undefined,
+    cart:[],
   },
   reducers: {
     setUser: (state,action) => {
@@ -28,11 +29,18 @@ export const appSlice = createSlice({
     },
     setSelectedTool: (state,action) => {
       state.selected_tool = action.payload.selected_tool
+    },
+    addToCart:(state,action) => {
+      console.log('Action',action)
+      state.cart.push(action.payload.tool)
+    },
+    removeFromCart:(state,action) =>{
+      state.cart = state.cart.filter((tool)=>tool.name !== action.payload.tool.name)
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setUser,setLoggedIn,setRegistered, setLocation, setToolList, setSelectedTool } = appSlice.actions
+export const { setUser,setLoggedIn,setRegistered, setLocation, setToolList, setSelectedTool,addToCart,removeFromCart } = appSlice.actions
 
 export default appSlice.reducer
