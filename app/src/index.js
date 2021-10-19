@@ -9,6 +9,8 @@ import {ApolloClient, InMemoryCache, ApolloProvider} from "@apollo/client";
 //import { createUploadLink } from 'apollo-upload-client';
 import store from './store'
 import { Provider } from 'react-redux'
+import { DAppProvider } from "@usedapp/core";
+
 
 /*
 const uploadLink = createUploadLink({
@@ -31,7 +33,10 @@ ReactDOM.render(
 <ApolloProvider client={client}>
 <React.StrictMode>
   <Provider store={store}>
+  <DAppProvider config={{}}>
+
     <App />
+  <DAppProvider>
   </Provider>
   </React.StrictMode>
   </ApolloProvider>,

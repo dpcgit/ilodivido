@@ -4,10 +4,12 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.4.9",
+    "@mui/material": "^5.0.4",
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "@usedapp/core": "^0.5.4",
     "antd": "^4.16.13",
     "apollo-server-express": "^3.1.2",
     "got": "^11.8.2",
