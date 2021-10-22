@@ -28,7 +28,7 @@ export default function SearchTool({user_name}) {
         console.log(event.target)
         console.log('Tool name to be searched: ',tool)
         //console.log(data)
-        console.log(a.data.tools_by_user)
+        console.log(a)
         //const string_obj = await JSON.stringify(a.data,null, '\t')
         //console.log('Tool string', string_obj)
         //await setToolList(a.data.tools_by_user)

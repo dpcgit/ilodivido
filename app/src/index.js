@@ -36,7 +36,7 @@ ReactDOM.render(
   <DAppProvider config={{}}>
 
     <App />
-  <DAppProvider>
+  </DAppProvider>
   </Provider>
   </React.StrictMode>
   </ApolloProvider>,

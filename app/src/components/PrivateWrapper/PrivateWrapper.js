@@ -9,6 +9,7 @@ import SignOut from '../SignOut/SignOut';
 import AddTool from '../AddTool/AddTool'
 import SearchTool from '../SearchTool/SearchTool'
 import { setLoggedIn, setLocation } from '../App/AppSlice';
+//import ConnectToWalletButton from '../ConnectToWalletButton/ConnectToWalletButton'
 
 function PrivateWrapper() {
   //const [location, setLocation] = useState();
@@ -39,6 +40,7 @@ function PrivateWrapper() {
         <BrowserRouter>
         Welcome {username}\b
         location {JSON.stringify(location)}
+
         <nav>
           <ul>
             <li><Link to="/signout" onClick={()=>{dispatch(setLoggedIn({logged_in:false}));localStorage.setItem('loggedIn',JSON.stringify(false))}}>Signout</Link></li>

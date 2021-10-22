@@ -19,7 +19,7 @@ const ToolSchema = new Schema({
         required: true
     },
     price: {
-        type: String,
+        type: Number,
         required: true
     },
     pictures: {
@@ -29,6 +29,10 @@ const ToolSchema = new Schema({
     location:{
         type: String,
         required: true
+    },
+    currency:{
+      type: String,
+      required: true
     }
 
 })

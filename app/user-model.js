@@ -21,6 +21,14 @@ const UserSchema = new Schema({
         type:String,
         required: false
     },
+    preferred_currency:{
+      type:String,
+      required: true
+    },
+    ethereum_address:{
+      type:String,
+      required: false
+    },
     tools:{
         type: [Schema.Types.ObjectId],
         required: false,

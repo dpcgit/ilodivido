@@ -1,4 +1,6 @@
 import { useEthers, useEtherBalance } from "@usedapp/core";
+import { formatEther } from '@ethersproject/units'
+
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
@@ -15,7 +17,7 @@ export default function ConnectButton() {
   return account ? (
     <Box>
       <p>
-        {etherBalance && etherBalance} ETH
+      {etherBalance && <p>Balance: {formatEther(etherBalance)}</p>}
       </p>
     </Box>
   ) : (
