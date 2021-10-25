@@ -6,7 +6,6 @@ import { useDispatch,useSelector } from 'react-redux';
 import { setToolList } from '../App/AppSlice'
 import { useQuery} from '@apollo/client';
 import { GET_TOOLS_BY_NAME, GET_TOOLS_BY_USER} from '../../graphql_const';
-import ToolMiniature from '../ToolMiniature/ToolMiniature';
 import Tool from '../Tool/Tool'
 
 export default function SearchTool({user_name}) {
@@ -48,9 +47,7 @@ export default function SearchTool({user_name}) {
               </label>
               <button type='submit'>Search</button>
             </form>
-            {toolList.map((tool)=>(
-              <ToolMiniature tool={tool} username={user_name}/>
-            ))}
+            
           </Route>
       </div>
 

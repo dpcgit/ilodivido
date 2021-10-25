@@ -46,7 +46,6 @@ function App() {
  //
   return (
       <div>
-        <h1>Ilodivido</h1>
         <BrowserRouter>
         <Switch>
           <Route path="/login">

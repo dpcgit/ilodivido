@@ -11,6 +11,20 @@ import { ADD_TOOL} from '../../graphql_const';
 //https://medium.com/@enespalaz/file-upload-with-graphql-9a4927775ef7
 //
 
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Input from '@mui/material/Input';
 
 
 function uploadFile(file, url) {
@@ -74,6 +88,8 @@ export default function AddTool({user_name}) {
 
   const [addTool, { data, loading, error }] = useMutation(ADD_TOOL);
 
+  const theme = createTheme();
+
   if (loading) return 'Submitting...';
   if (error) return `Submission error! ${error.message}`;
 
@@ -98,43 +114,86 @@ export default function AddTool({user_name}) {
     };
 
   return(
-    <div className="add-tool-wrapper">
-        <h1>Add Tool</h1>
-        <p>Username to be modified: {user_name}</p>
-        <form onSubmit={e=>handleSubmit(e)}>
-            <label>
-                <p>Name</p>
-                <input type="text" name="name" required onChange={e=>handleChange(e)}/>
-            </label>
-            <label>
-                <p>Description</p>
-                <input type="text" name="description" required onChange={e=>handleChange(e)}/>
-            </label>
-            <label>
-                <p>Powertool?</p>
-                <input type="text" name="power_tool" onChange={e=>handleChange(e)} required/>
-            </label>
-            <label>
-                <p>HourlyPrice?</p>
-                <input type="text" name="hourly_price" onChange={e=>handleChange(e)} required/>
-            </label>
-            <label>
-                <p>Price</p>
-                <input type="text" name="price" onChange={e=>handleChange(e)} required/>
-            </label>
-            <label>
-                <p>Pictures</p>
-                <input type="file" multiple name="pictures" accept="image/png, image/gif, image/jpeg" onChange={e=>{setToolPicture(e.target.files); console.log('toolPicture: ',toolPicture)}} required/>
-            </label>
-            <label>
-                <p>Location</p>
-                <input type="text" name="location" onChange={e=>handleChange(e)} required/>
-            </label>
-            <div>
-                <button type="submit">Add Tool</button>
-            </div>
-        </form>
 
-    </div>
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  name="name"
+                  required
+                  fullWidth
+                  label="Name"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  label="Description"
+                  name="description"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  label="Power tool?"
+                  name="power_tool"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="hourly_price"
+                  label="Hourly price?"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="price"
+                  label="Price"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Input
+                  required
+                  fullWidth
+                  multiple
+                  type='file'
+                  name="pictures"
+                  label="Pictures"
+                  inputProps={{ accept: 'image/png, image/gif, image/jpeg', multiple:true }}
+                  onChange={e=>{setToolPicture(e.target.files); console.log('toolPicture: ',toolPicture)}}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="location"
+                  label="Location"
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onSubmit={e=>handleSubmit(e)}
+            >
+              Add tool
+            </Button>
+          </Box>
+
+      </Container>
+    </ThemeProvider>
   )
 }
