@@ -30,14 +30,9 @@ mutation AddToolMutation($addToolInput: ToolInput!, $addToolUsername: String!) {
   addTool(input: $addToolInput, username: $addToolUsername) {
     name
     description
-    power_tool
-    hourly_price
-    price
-    pictures
-    location
-    id
+    
   }
-}  
+}
 `;
 
 

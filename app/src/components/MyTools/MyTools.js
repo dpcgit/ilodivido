@@ -52,7 +52,7 @@ export default function MyTools() {
       dispatch(setToolList({tool_list:data.tools_by_user}))
       return(
         <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
+        <Container component="main" >
           <CssBaseline />
             <Route path="/my-tools/:username/:tool" children={<Tool/>}>
             </Route>

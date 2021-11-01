@@ -10,6 +10,7 @@ import { ADD_TOOL} from '../../graphql_const';
 // https://www.pluralsight.com/guides/how-to-use-a-simple-form-submit-with-files-in-react
 //https://medium.com/@enespalaz/file-upload-with-graphql-9a4927775ef7
 //
+import { useSelector } from 'react-redux';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -38,15 +39,19 @@ function uploadFile(file, url) {
     });
 }
 
-export default function AddTool({user_name}) {
+export default function AddTool() {
+
+  const user_name = useSelector((state)=>state.app.username);
+  const location = useSelector((state)=>state.app.location);
 
   const [tool,setTool] = useState({ name:"",
                                     description:"",
                                     power_tool:'',
                                     hourly_price:'',
-                                    price:'',
+                                    price:0,
                                     pictures:[],
-                                    location:''
+                                    location:location.toString(),
+                                    currency:'USD'
     });
   const [toolPicture,setToolPicture] = useState();
 
@@ -113,6 +118,10 @@ export default function AddTool({user_name}) {
     setTool({...tool,[event.target.name]:event.target.value});
     };
 
+  function handlePriceChange(e){
+    setTool({...tool,[e.target.name]:Number(e.target.value)})
+  }
+
   return(
 
     <ThemeProvider theme={theme}>
@@ -127,6 +136,7 @@ export default function AddTool({user_name}) {
                   fullWidth
                   label="Name"
                   autoFocus
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -135,6 +145,7 @@ export default function AddTool({user_name}) {
                   fullWidth
                   label="Description"
                   name="description"
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -143,6 +154,7 @@ export default function AddTool({user_name}) {
                   fullWidth
                   label="Power tool?"
                   name="power_tool"
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -151,6 +163,7 @@ export default function AddTool({user_name}) {
                   fullWidth
                   name="hourly_price"
                   label="Hourly price?"
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -159,6 +172,8 @@ export default function AddTool({user_name}) {
                   fullWidth
                   name="price"
                   label="Price"
+                  type="number"
+                  onChange={handlePriceChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -173,21 +188,12 @@ export default function AddTool({user_name}) {
                   onChange={e=>{setToolPicture(e.target.files); console.log('toolPicture: ',toolPicture)}}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="location"
-                  label="Location"
-                />
-              </Grid>
             </Grid>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onSubmit={e=>handleSubmit(e)}
             >
               Add tool
             </Button>

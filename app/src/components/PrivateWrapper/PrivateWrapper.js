@@ -54,22 +54,67 @@ function PrivateWrapper() {
     setAnchorEl(null);
   };
 
+  function getPosition(){
+      return new Promise((resolve,reject)=>
+      navigator.geolocation.getCurrentPosition(resolve,reject)
+    );
+  }
+
   useEffect(()=>{
-
-    if(navigator.geolocation){
-      navigator.geolocation.getCurrentPosition((pos)=>{
-        dispatch(setLocation({location:[pos.coords.latitude,pos.coords.longitude]}))
-        //console.log('location in state: ',location)
-      })
-    }
-    else{
-      dispatch(setLocation({location:['']}))
-    }
-
-  },[location])
+    (async ()=>{
+        try{
+          const position = await getPosition();
+          dispatch(setLocation({location:[position.coords.latitude,position.coords.longitude]}))
+        }
+        catch(err){
+          console.error(err.message)
+        }
+    })();
+  })
 
   if(!loggedIn){
     return <Redirect to ="/login"/>
+  }
+  if(location[0]===''){
+    return (
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <CssBaseline />
+          <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="sticky">
+              <Toolbar>
+                <IconButton
+                  size="large"
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                  sx={{ mr: 2 }}
+                  onClick={handleClick}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                  }}
+                >
+                  <MenuItem component={Link} to="/preferences">Preferences</MenuItem>
+                  <MenuItem onClick={()=>{dispatch(setLoggedIn({logged_in:false}));localStorage.setItem('loggedIn',JSON.stringify(false))}}>Logout</MenuItem>
+                </Menu>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                  Ilodivido
+                </Typography>
+              </Toolbar>
+            </AppBar>
+            <p>Location not available</p>
+          </Box>
+        </BrowserRouter>
+      </ThemeProvider>
+      );
   }
   return (
     <ThemeProvider theme={theme}>
@@ -119,6 +164,7 @@ function PrivateWrapper() {
               <MyTools/>
             </Route>
           </Switch>
+
         </Box>
         <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}>
           <BottomNavigation

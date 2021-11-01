@@ -26,12 +26,12 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 export default function Register() {
-  const [user,setUser] = useState({username:"",email:"",password:"", location:''});
+  const [user,setUser] = useState({username:"",email:"",password:"", location:'',preferred_currency:'USD'});
   const dispatch = useDispatch();
   const [addUser, { data, loading, error }] = useMutation(ADD_USER);
 
   const theme = createTheme();
-  
+
   if (loading) return 'Submitting...';
   if (error) return `Submission error! ${error.message}`;
 

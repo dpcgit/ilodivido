@@ -14,6 +14,7 @@ const typeDefs = gql`
         password: String
         location: String
         tools: [Tool]
+        preferred_currency: String
     }
 
     type Tool{
@@ -22,9 +23,10 @@ const typeDefs = gql`
         description:String!
         power_tool:String!
         hourly_price:String!
-        price:String!
+        price: Int!
         pictures: [String]!
         location: String!
+        currency: String!
     }
 
     input UserInput {
@@ -33,6 +35,7 @@ const typeDefs = gql`
         password: String
         location: String
         tools: String
+        preferred_currency: String
     }
 
     input ToolInput {
@@ -40,9 +43,10 @@ const typeDefs = gql`
         description:String!
         power_tool:String!
         hourly_price:String!
-        price:String!
+        price:Int!
         pictures:[String]!
         location: String!
+        currency: String!
     }
 
     type Query {
