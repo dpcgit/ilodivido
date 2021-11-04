@@ -7,6 +7,7 @@ import { Link, BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Preferences from '../Preferences/Preferences';
 import AddTool from '../AddTool/AddTool'
 import SearchTool from '../SearchTool/SearchTool'
+import SearchLocation from '../SearchLocation/SearchLocation'
 import { setLoggedIn, setLocation } from '../App/AppSlice';
 import MyTools from '../MyTools/MyTools'
 //import ConnectToWalletButton from '../ConnectToWalletButton/ConnectToWalletButton'
@@ -160,6 +161,9 @@ function PrivateWrapper() {
             <Route path='/search-tool*'>
               <SearchTool user_name={username}/>
             </Route>
+            <Route path='/search-location'>
+              <SearchLocation/>
+            </Route>
             <Route path='/my-tools'>
               <MyTools/>
             </Route>
@@ -172,7 +176,7 @@ function PrivateWrapper() {
           >
             <BottomNavigationAction label="My Tools" icon={<RestoreIcon />} component={Link} to="/my-tools"/>
             <BottomNavigationAction label="Search tools" icon={<FavoriteIcon />} component={Link} to="/search-tool"/>
-            <BottomNavigationAction label="Search location" icon={<LocationOnIcon />} component={Link} to="/search-tool"/>
+            <BottomNavigationAction label="Search location" icon={<LocationOnIcon />} component={Link} to="/search-location"/>
           </BottomNavigation>
         </Box>
       </BrowserRouter>
